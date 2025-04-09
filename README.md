@@ -52,8 +52,8 @@
 
    ```sh
    mkdir logs
-   mkdir logs/application.log
-   mkdir logs/application-error.log
+   echo. > logs/application-error.log
+   mk logs/application-error.log
    ```
 
 ### Start the development server
