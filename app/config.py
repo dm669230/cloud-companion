@@ -2,10 +2,10 @@ import os, sys, logging
 from typing import List
 from loguru import logger
 from pathlib import Path
+import urllib.parse
 from dotenv import load_dotenv
 
 load_dotenv()
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 app_log_path = os.path.join(BASE_DIR, "logs", "application.log")
 if os.path.exists(app_log_path):
@@ -17,9 +17,23 @@ class AppSettings:
     DESCRIPTION: str = "Cloud Companion - Your Friendly Guide to the Cloud"
     VERSION: str = "0.1.0"
     API_PREFIX: str = "/api"
+    ALGORITHM = os.getenv("ALGORITHM", "")
+    SESSION_SECRET_KEY: str = os.getenv("SESSION_SECRET_KEY", "")
+    
+    # DB_PASSWORD_PARSE: str = urllib.parse.quote_plus(os.getenv("DB_PASSWORD", ""))
+    DB_PASSWORD: str = os.getenv("DB_PASSWORD", "")
+    DB_NAME: str = os.getenv("DB_NAME", "")
+    DB_USER: str = os.getenv("DB_USER", "")
+    DB_PORT: str = os.getenv("DB_PORT", "")
+    DB_HOST: str = os.getenv("DB_HOST", "")
+    
+    ACCESS_TOKEN_EXPIRE_MINUTES = 30
+    SERVER_HOST: str = os.getenv("SERVER_HOST", "")
+    SERVER_PORT: str = os.getenv("SERVER_PORT", "")
+    DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
     DEBUG: bool = bool(int(os.getenv("DEBUG", "0")))
-    SESSION_SECRET_KEY: str = os.getenv("SESSION_SECRET_KEY", "")
+    print("SESSION_SECRET_KEY",SESSION_SECRET_KEY)
 
     LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO")
     LOG_FILE: str = os.getenv("LOG_FILE", "")
